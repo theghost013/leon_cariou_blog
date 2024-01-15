@@ -1,6 +1,6 @@
-import { config } from "dotenv";
+import { config } from "dotenv"
 
-config({ path: ".env.local" });
+config({ path: ".env.local" })
 
 const knexfile = {
   client: "pg",
@@ -14,6 +14,6 @@ const knexfile = {
     directory: "./src/db/seeds",
     loadExtensions: [".mjs"],
   },
-};
+}
 
-export default knexfile;
+export default knexfile
