@@ -4,10 +4,8 @@ export const up = async (db) => {
     table.text("email").notNullable()
     table.text("password").notNullable()
     table.text("username").notNullable()
-    table.text("first_name").notNullable()
-    table.text("last_name").notNullable()
-    table.boolean("is_active").notNullable().defaultTo(true)
-    table.text("role").notNullable()
+    table.boolean("isActive").notNullable().defaultTo(true)
+    table.text("role").notNullable().defaultTo("user")
     table.timestamps(true, true)
   })
 }

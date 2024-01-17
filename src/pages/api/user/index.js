@@ -15,6 +15,7 @@ const handle = mw({
       body: {
         firstName: nameValidator.string().required(),
         lastName: nameValidator.string().required(),
+        username: nameValidator.string().required(),
         email: emailValidator.required(),
         password: passwordValidator.required(),
       },
@@ -22,7 +23,7 @@ const handle = mw({
     async ({
       send,
       input: {
-        body: { email, password },
+        body: { email, password, username },
       },
       models: { UserModel },
     }) => {
@@ -42,6 +43,7 @@ const handle = mw({
         email,
         passwordHash,
         passwordSalt,
+        username,
       })
 
       send(true)

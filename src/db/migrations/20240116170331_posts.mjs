@@ -3,8 +3,8 @@ export const up = async (db) => {
     table.increments("id").primary()
     table.text("title").notNullable()
     table.text("body").notNullable()
-    table.integer("user_id").unsigned().notNullable()
-    table.foreign("user_id").references("users.id")
+    table.integer("userId").unsigned().notNullable()
+    table.foreign("userId").references("users.id")
     table.timestamps(true, true)
   })
 }
