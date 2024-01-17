@@ -13,9 +13,7 @@ const handle = mw({
   POST: [
     validate({
       body: {
-        firstName: nameValidator.string().required(),
-        lastName: nameValidator.string().required(),
-        username: nameValidator.string().required(),
+        username: nameValidator.required(),
         email: emailValidator.required(),
         password: passwordValidator.required(),
       },
