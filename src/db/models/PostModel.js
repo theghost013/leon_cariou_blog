@@ -6,10 +6,10 @@ class PostModel extends BaseModel {
   static get relationMappings() {
     return {
       user: {
-        relation: BaseModel.BelongsToOneRelation,
         modelClass: UserModel,
+        relation: BaseModel.BelongsToOneRelation,
         join: {
-          from: "posts.user_id",
+          from: "posts.userId",
           to: "users.id",
         },
       },

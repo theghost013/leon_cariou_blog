@@ -27,6 +27,8 @@ const handleError = (err, { res }) => {
     res
       .status(HTTP_ERRORS.INTERNAL_SERVER_ERROR)
       .send({ error: "Something went wrong." })
+    // eslint-disable-next-line no-console
+    console.error(error)
 
     return
   }

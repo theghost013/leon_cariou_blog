@@ -11,6 +11,8 @@ const validate =
     try {
       // eslint-disable-next-line no-console
       console.log(req.body)
+      // eslint-disable-next-line no-console
+      console.log(req.query)
       const sanitizedInput = await object(
         merge([
           queryValidator ? { query: object(queryValidator) } : {},

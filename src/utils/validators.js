@@ -18,3 +18,7 @@ export const passwordValidator = string()
   )
 
 export const roleValidator = string().oneOf(["admin", "author", "user"])
+
+export const bodyValidator = string().min(1)
+
+export const titleValidator = string().min(1)
