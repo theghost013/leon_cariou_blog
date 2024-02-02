@@ -9,14 +9,18 @@ const auth = async ({
     cookies: { [webConfig.security.session.cookie.key]: cookies },
   },
   next,
+  data,
 }) => {
-  jsonwebtoken.verify(authorization, config.security.jwt.secret)
-
   const cookiesJwt = jsonwebtoken.verify(cookies, config.security.jwt.secret)
 
   if (cookiesJwt.payload !== authorization) {
     throw new HttpForbiddenError()
   }
+
+  data.userId = jsonwebtoken.verify(
+    authorization,
+    config.security.jwt.secret,
+  ).payload.user.id
 
   await next()
 }

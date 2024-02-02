@@ -1,9 +1,11 @@
+import auth from "@/api/middlewares/auth"
 import validate from "@/api/middlewares/validate"
 import mw from "@/api/mw"
 import {
   pageValidator,
   titleValidator,
   bodyValidator,
+  idValidator,
 } from "@/utils/validators"
 
 const handle = mw({
@@ -24,14 +26,18 @@ const handle = mw({
       const posts = await query.clone().withGraphFetched("user").page(page)
       const [{ count }] = await query.clone().count()
 
-      send({ posts, count })
+      send(posts, { count })
     },
   ],
   POST: [
+    auth,
     validate({
       body: {
         title: titleValidator.required(),
         body: bodyValidator.required(),
+      },
+      data: {
+        userId: idValidator.required(),
       },
     }),
     async ({
@@ -40,10 +46,12 @@ const handle = mw({
         body: { title, body },
       },
       models: { PostModel },
+      data: { userId },
     }) => {
       const post = await PostModel.query().insert({
         title,
         body,
+        userId,
       })
       send(post)
     },

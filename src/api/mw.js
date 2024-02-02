@@ -7,7 +7,6 @@ import {
 } from "@/api/errors"
 import { HTTP_ERRORS } from "@/pages/api/constants"
 import { JsonWebTokenError } from "jsonwebtoken"
-import { randomUUID } from "node:crypto"
 import { NotFoundError } from "objection"
 
 const handleError = (err, { res }) => {
@@ -40,7 +39,6 @@ const handleError = (err, { res }) => {
   res.send({ error: error.message })
 }
 const mw = (methodHandlers) => async (req, res) => {
-  const requestId = randomUUID()
   const handlers = methodHandlers[req.method.toUpperCase()]
 
   if (!handlers) {
@@ -60,7 +58,6 @@ const mw = (methodHandlers) => async (req, res) => {
     req,
     res,
     next,
-    requestId,
   })
 
   try {

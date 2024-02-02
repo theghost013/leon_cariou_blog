@@ -27,5 +27,6 @@ export const createContext = ({ req, res, next }) => {
       PostModel,
       CommentModel,
     },
+    data: {},
   }
 }
