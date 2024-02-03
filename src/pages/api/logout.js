@@ -5,7 +5,7 @@ import webConfig from "@/web/config"
 import ms from "ms"
 
 const handle = mw({
-  DELETE: [
+  POST: [
     auth,
     ({ send, res }) => {
       res.setHeader(

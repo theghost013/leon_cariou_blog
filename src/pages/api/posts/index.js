@@ -1,4 +1,5 @@
 import auth from "@/api/middlewares/auth"
+import isAuthor from "@/api/middlewares/isAuthor"
 import validate from "@/api/middlewares/validate"
 import mw from "@/api/mw"
 import {
@@ -31,6 +32,7 @@ const handle = mw({
   ],
   POST: [
     auth,
+    isAuthor,
     validate({
       body: {
         title: titleValidator.required(),

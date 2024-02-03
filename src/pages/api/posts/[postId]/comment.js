@@ -1,6 +1,7 @@
 import mw from "@/api/mw"
 import validate from "@/api/middlewares/validate"
 import { idValidator, bodyValidator } from "@/utils/validators"
+import auth from "@/api/middlewares/auth"
 
 const handle = mw({
   GET: [
@@ -21,12 +22,16 @@ const handle = mw({
     },
   ],
   POST: [
+    auth,
     validate({
       query: {
         postId: idValidator.required(),
       },
       body: {
         body: bodyValidator.required(),
+      },
+      data: {
+        userId: idValidator.required(),
       },
     }),
     async ({
@@ -36,10 +41,12 @@ const handle = mw({
         body: { body },
       },
       models: { CommentModel },
+      data: { userId },
     }) => {
       const comment = await CommentModel.query().insert({
         body,
         postId,
+        userId,
       })
       send(comment)
     },

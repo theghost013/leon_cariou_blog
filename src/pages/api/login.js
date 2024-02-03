@@ -48,6 +48,7 @@ const handle = mw({
           payload: {
             user: {
               id: user.id,
+              role: user.role,
             },
           },
         },

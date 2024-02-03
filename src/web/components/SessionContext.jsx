@@ -1,5 +1,5 @@
 import config from "@/web/config"
-import { deleteResource } from "@/web/services/apiClient"
+import { createResource } from "@/web/services/apiClient"
 import jsonwebtoken from "jsonwebtoken"
 import {
   createContext,
@@ -20,7 +20,9 @@ export const SessionContextProvider = (props) => {
     setSession(payload)
   }, [])
   const logOut = useCallback(async () => {
-    await deleteResource("logout")
+    // eslint-disable-next-line no-console
+    console.log("logout")
+    await createResource("logout")
     localStorage.removeItem(config.security.session.cookie.key)
     setSession(null)
   }, [])

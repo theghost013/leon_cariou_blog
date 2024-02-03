@@ -1,6 +1,6 @@
 import { HttpAuthenticationError } from "@/api/errors"
 
-const isAdmin = async ({ next, data }) => {
+const isAuthor = async ({ next, data }) => {
   const { role } = data
 
   if (role !== "author" && role !== "admin") {
@@ -10,4 +10,4 @@ const isAdmin = async ({ next, data }) => {
   await next()
 }
 
-export default isAdmin
+export default isAuthor

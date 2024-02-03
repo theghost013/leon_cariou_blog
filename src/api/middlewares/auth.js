@@ -11,6 +11,8 @@ const auth = async ({
   next,
   data,
 }) => {
+  // eslint-disable-next-line no-console
+  console.log("auth")
   const cookiesJwt = jsonwebtoken.verify(cookies, config.security.jwt.secret)
 
   if (cookiesJwt.payload !== authorization) {
@@ -21,6 +23,11 @@ const auth = async ({
     authorization,
     config.security.jwt.secret,
   ).payload.user.id
+
+  data.role = jsonwebtoken.verify(
+    authorization,
+    config.security.jwt.secret,
+  ).payload.user.role
 
   await next()
 }
