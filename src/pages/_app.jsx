@@ -19,7 +19,7 @@ const App = ({ Component: Page, pageProps }) => (
             <MainMenu className="ms-auto" />
           </div>
         </header>
-        <div className="max-w-3xl mx-auto text-sky-700">
+        <div className="max-w-3xl mx-auto">
           <Page {...pageProps} />
         </div>
       </QueryClientProvider>

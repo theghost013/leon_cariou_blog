@@ -5,6 +5,7 @@ import CreateComment from "@/web/components/CreateComment"
 import { useState } from "react"
 import { useSession } from "@/web/components/SessionContext"
 import CommentsList from "@/web/components/CommentsList"
+import Button from "@/web/components/ui/Button"
 
 const PostPage = () => {
   const [comments, setComments] = useState(false)
@@ -34,25 +35,28 @@ const PostPage = () => {
 
   return (
     <article>
-      {post.userId === session?.user.id && (
-        <button onClick={() => router.push(`/posts/${post.id}/update`)}>
-          Edit
-        </button>
-      )}
       <h1 className="text-2xl">
         {post.title} (#{post.id})
       </h1>
       <p>{post.body}</p>
-      <p>{post.views.toString()}</p>
+      <p>Views: {post.views.toString()}</p>
+      {post.userId === session?.user.id && (
+        <Button onClick={() => router.push(`/posts/${post.id}/update`)}>
+          Edit
+        </Button>
+      )}
+      <p>{post.comments.length} Comments:</p>
       {session && (
-        <button onClick={() => setComments(!comments)}>Comment</button>
+        <Button onClick={() => setComments(!comments)}>Comment</Button>
       )}
       {comments && <CreateComment postId={postId} refetch={refetch} />}
-      {post.comments.map(({ id, body, user }) => (
-        <li key={id}>
-          <CommentsList body={body} user={user} />
-        </li>
-      ))}
+      <ul>
+        {post.comments.map(({ id, body, user }) => (
+          <li key={id}>
+            <CommentsList body={body} user={user} />
+          </li>
+        ))}
+      </ul>
     </article>
   )
 }

@@ -61,10 +61,9 @@ const Profilepage = () => {
   return (
     <article>
       <h1 className="text-2xl">Profile</h1>
-
       <div className="flex flex-row gap-2">
         {!editing ? (
-          <p>{profile.username}</p>
+          <p className="my-auto text-xl">{profile.username}</p>
         ) : (
           <Formik
             initialValues={{ username: profile.username }}
@@ -82,13 +81,13 @@ const Profilepage = () => {
         </Button>
       </div>
 
-      <p>{profile.email}</p>
-      <p>{profile.role}</p>
+      <p>Email: {profile.email}</p>
+      <p>Role: {profile.role}</p>
       <p>Created at {profile.created_at}</p>
       <div className="flex felx-row gap-4">
-        <p>post count : {countPosts}</p>
-        <p>comment count : {countComments}</p>
-        <p>view count : {countViews}</p>
+        <p>Post count : {countPosts}</p>
+        <p>Comment count : {countComments}</p>
+        <p>View count : {countViews}</p>
       </div>
     </article>
   )
