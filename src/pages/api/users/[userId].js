@@ -3,8 +3,8 @@ import validate from "@/api/middlewares/validate"
 import {
   idValidator,
   nameValidator,
-  emailValidator,
   roleValidator,
+  isActiveValidator,
 } from "@/utils/validators"
 import auth from "@/api/middlewares/auth"
 import isAdmin from "@/api/middlewares/isAdmin"
@@ -31,30 +31,35 @@ const handle = mw({
     },
   ],
   PATCH: [
+    auth,
+    isAdmin,
     validate({
       body: {
-        userId: idValidator.required(),
         username: nameValidator.required(),
-        email: emailValidator.required(),
         role: roleValidator.required(),
+        isActive: isActiveValidator.required(),
+      },
+      query: {
+        userId: idValidator.required(),
       },
     }),
     async ({
       send,
       input: {
-        body: { userId, email, username, role },
+        query: { userId },
+        body: { username, role, isActive },
       },
       models: { UserModel },
     }) => {
       const user = await UserModel.query().findById(userId).throwIfNotFound()
 
       await user.$query().update({
-        email,
         username,
         role,
+        isActive,
       })
 
-      send(true)
+      send(user)
     },
   ],
 

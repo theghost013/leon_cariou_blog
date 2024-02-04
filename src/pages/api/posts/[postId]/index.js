@@ -72,24 +72,6 @@ const handle = mw({
       send(post)
     },
   ],
-  DELETE: [
-    validate({
-      query: {
-        postId: idValidator.required(),
-      },
-    }),
-    async ({
-      send,
-      input: {
-        query: { postId },
-      },
-      models: { PostModel },
-    }) => {
-      const post = await PostModel.query().findById(postId).throwIfNotFound()
-      await post.$query().delete()
-      send(post)
-    },
-  ],
 })
 
 export default handle

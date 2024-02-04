@@ -5,7 +5,11 @@ import UsersList from "@/web/components/UsersList"
 
 const AdminPage = () => {
   const { session } = useSession()
-  const { isLoading, data: { data: { result: users } = {} } = {} } = useQuery({
+  const {
+    isLoading,
+    refetch,
+    data: { data: { result: users } = {} } = {},
+  } = useQuery({
     queryKey: ["posts"],
     queryFn: () => readResource("users"),
   })
@@ -24,7 +28,12 @@ const AdminPage = () => {
       <ul>
         {users.map(({ id, username, email }) => (
           <li key={id}>
-            <UsersList id={id} username={username} email={email} />
+            <UsersList
+              id={id}
+              username={username}
+              email={email}
+              refetch={refetch}
+            />
           </li>
         ))}
       </ul>

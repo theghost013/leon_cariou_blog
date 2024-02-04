@@ -37,6 +37,12 @@ const handle = mw({
         throw new HttpAuthenticationError()
       }
 
+      if (!user.isActive) {
+        await sleep(AVERAGE_PASSWORD_HASHING_DURATION)
+
+        throw new HttpAuthenticationError()
+      }
+
       const [passwordHash] = await hashPassword(password, user.passwordSalt)
 
       if (passwordHash !== user.passwordHash) {

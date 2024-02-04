@@ -37,7 +37,6 @@ const UserAdminPage = () => {
       <p>{user.email}</p>
       <p>{user.role}</p>
       <p>{user.created_at}</p>
-      <p>{user.updated_at}</p>
       <p>{user.isActive.toString()}</p>
       <button onClick={() => router.push(`/admin/user/${user.id}/update`)}>
         Edit

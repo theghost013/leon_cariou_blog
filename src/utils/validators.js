@@ -1,4 +1,4 @@
-import { number, string } from "yup"
+import { boolean, number, string } from "yup"
 
 export const nameValidator = string().min(3)
 
@@ -22,3 +22,5 @@ export const roleValidator = string().oneOf(["admin", "author", "user"])
 export const bodyValidator = string().min(1)
 
 export const titleValidator = string().min(1)
+
+export const isActiveValidator = boolean().default(true)

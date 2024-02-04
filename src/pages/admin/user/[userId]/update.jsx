@@ -4,82 +4,101 @@ import { useRouter } from "next/router"
 import { useCallback } from "react"
 import { useSession } from "@/web/components/SessionContext"
 import { object } from "yup"
-import { titleValidator, bodyValidator } from "@/utils/validators"
+import {
+  titleValidator,
+  roleValidator,
+  isActiveValidator,
+} from "@/utils/validators"
 import { Formik } from "formik"
 import Form from "@/web/components/ui/Form"
 import FormField from "@/web/components/ui/FormField"
 import Button from "@/web/components/ui/Button"
+import Select from "@/web/components/ui/Select"
 
 const useDataReadResource = () => {
   const {
-    query: { postId },
+    query: { userId },
   } = useRouter()
-  const { isLoading, data: { data: { result: [post] = [] } = {} } = {} } =
+  const { isLoading, data: { data: { result: [user] = [] } = {} } = {} } =
     useQuery({
-      queryKey: ["post"],
-      queryFn: () => readResource(`posts/${postId}`),
-      enabled: Boolean(postId),
+      queryKey: ["user"],
+      queryFn: () => readResource(`users/${userId}`),
+      enabled: Boolean(userId),
       initialData: { data: {} },
     })
 
-  return { isLoading, post }
+  return { isLoading, user }
 }
+const initialValues = (user) => ({
+  username: user.username,
+  role: user.role,
+  isActive: user.isActive,
+})
+const optionsRole = [
+  { value: "user", label: "User" },
+  { value: "author", label: "Author" },
+  { value: "admin", label: "Admin" },
+]
+const optionsIsActive = [
+  { value: true, label: "Yes" },
+  { value: false, label: "No" },
+]
 const validationSchema = object({
-  title: titleValidator.required().label("Post title"),
-  body: bodyValidator.required().label("Post body"),
+  username: titleValidator.required().label("User username"),
+  role: roleValidator.required().label("User role"),
+  isActive: isActiveValidator.required().label("User is active"),
 })
 const UpdateUserPage = () => {
   const { session } = useSession()
   const router = useRouter()
-  const { isLoading, post } = useDataReadResource()
-  const { mutateAsync: updatePost } = useMutation({
-    mutationFn: (postUpdate) => updateResource(`posts/${post.id}`, postUpdate),
+  const { user } = useDataReadResource()
+  const { mutateAsync: updateUser } = useMutation({
+    mutationFn: (userUpdate) => updateResource(`users/${user.id}`, userUpdate),
   })
   const handleSubmit = useCallback(
-    async ({ title, body }) => {
+    async ({ username, role, isActive }) => {
       const {
         data: {
-          result: [postUpdate],
+          result: [userUpdate],
         },
-      } = await updatePost({
-        title,
-        body,
+      } = await updateUser({
+        username,
+        role,
+        isActive,
       })
 
       // eslint-disable-next-line no-console
-      console.log(postUpdate)
+      console.log(userUpdate)
 
-      router.push(`/posts/${postUpdate.id}`)
+      router.push(`/admin/user/${userUpdate.id}`)
     },
-    [updatePost, router],
+    [router, updateUser],
   )
 
-  if (
-    !session ||
-    session.user.role === "user" ||
-    post.userId !== session.user.id
-  ) {
-    return <p>You are not allowed to update posts</p>
-  }
-
-  if (isLoading) {
-    return "Loading..."
-  }
-
-  if (!post && !isLoading) {
-    return "Post not found"
+  if (!session || session.user.role === "user") {
+    return <p>You are not allowed to update users</p>
   }
 
   return (
     <Formik
-      initialValues={{ title: post.title, body: post.body }}
+      initialValues={initialValues(user)}
       validationSchema={validationSchema}
       onSubmit={handleSubmit}
     >
       <Form>
-        <FormField name="title" label="Title" placeholder="Enter a title" />
-        <FormField name="body" label="Content" placeholder="Enter a content" />
-        <Button type="submit">Edit Post</Button>
+        <FormField
+          name="username"
+          label="Username"
+          placeholder="Enter a username"
+        />
+        <FormField as={Select} name="role" label="Role" options={optionsRole} />
+        <FormField
+          as={Select}
+          name="isActive"
+          label="Is Active"
+          options={optionsIsActive}
+        />
+        <Button type="submit">Edit User</Button>
       </Form>
     </Formik>
   )
