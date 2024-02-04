@@ -7,7 +7,6 @@ import Link from "@/web/components/ui/Link"
 
 const UserAdminPage = () => {
   const { session } = useSession()
-  const router = useRouter()
   const {
     query: { userId },
   } = useRouter()
@@ -36,9 +35,9 @@ const UserAdminPage = () => {
       <h1 className="text-2xl">
         {user.username} #{user.id}
       </h1>
-      <p>{user.email}</p>
-      <p>{user.role}</p>
-      <p>{user.created_at}</p>
+      <p>Email: {user.email}</p>
+      <p>Role: {user.role}</p>
+      <p>Created at: {new Date(user.created_at).toLocaleDateString()}</p>
       <p>is Active: {user.isActive ? "yes" : "no"}</p>
       <Button
         as={Link}

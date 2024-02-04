@@ -41,7 +41,7 @@ const IndexPage = (props) => {
 
   return (
     <div className="py-4 flex flex-col gap-16">
-      <ul className="flex flex-col gap-8">
+      <ul className="flex flex-col gap-4">
         {canCreate && (
           <Button as={Link} className="text-center" href="/posts/create">
             Create post

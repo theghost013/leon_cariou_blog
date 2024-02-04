@@ -46,9 +46,6 @@ const UpdatePostPage = () => {
         body,
       })
 
-      // eslint-disable-next-line no-console
-      console.log(postUpdate)
-
       router.push(`/posts/${postUpdate.id}`)
     },
     [updatePost, router],

@@ -35,9 +35,6 @@ const CreatePage = () => {
         body,
       })
 
-      // eslint-disable-next-line no-console
-      console.log(post)
-
       router.push(`/posts/${post.id}`)
     },
     [savePost, router],

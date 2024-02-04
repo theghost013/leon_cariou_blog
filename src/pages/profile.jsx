@@ -83,7 +83,7 @@ const Profilepage = () => {
 
       <p>Email: {profile.email}</p>
       <p>Role: {profile.role}</p>
-      <p>Created at {profile.created_at}</p>
+      <p>Created at: {new Date(profile.created_at).toLocaleDateString()}</p>
       <div className="flex felx-row gap-4">
         <p>Post count : {countPosts}</p>
         <p>Comment count : {countComments}</p>

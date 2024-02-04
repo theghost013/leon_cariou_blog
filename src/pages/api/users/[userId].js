@@ -77,8 +77,6 @@ const handle = mw({
       models: { UserModel },
     }) => {
       const user = await UserModel.query().findById(userId).throwIfNotFound()
-      // eslint-disable-next-line no-console
-      console.log(user)
 
       await user.$query().delete()
 

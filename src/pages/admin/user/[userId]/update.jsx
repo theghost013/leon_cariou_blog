@@ -67,9 +67,6 @@ const UpdateUserPage = () => {
         isActive,
       })
 
-      // eslint-disable-next-line no-console
-      console.log(userUpdate)
-
       router.push(`/admin/user/${userUpdate.id}`)
     },
     [router, updateUser],

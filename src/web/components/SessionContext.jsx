@@ -22,8 +22,6 @@ export const SessionContextProvider = (props) => {
     setSession(payload)
   }, [])
   const logOut = useCallback(async () => {
-    // eslint-disable-next-line no-console
-    console.log("logout")
     await createResource("logout")
     localStorage.removeItem(config.security.session.cookie.key)
     setSession(null)
