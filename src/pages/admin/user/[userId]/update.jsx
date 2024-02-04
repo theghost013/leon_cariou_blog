@@ -28,7 +28,7 @@ const validationSchema = object({
   title: titleValidator.required().label("Post title"),
   body: bodyValidator.required().label("Post body"),
 })
-const UpdatePostPage = () => {
+const UpdateUserPage = () => {
   const { session } = useSession()
   const router = useRouter()
   const { isLoading, post } = useDataReadResource()
@@ -85,4 +85,4 @@ const UpdatePostPage = () => {
   )
 }
 
-export default UpdatePostPage
+export default UpdateUserPage

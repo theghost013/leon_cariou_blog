@@ -11,8 +11,6 @@ const auth = async ({
   next,
   data,
 }) => {
-  // eslint-disable-next-line no-console
-  console.log("auth")
   const cookiesJwt = jsonwebtoken.verify(cookies, config.security.jwt.secret)
 
   if (cookiesJwt.payload !== authorization) {

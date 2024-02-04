@@ -14,11 +14,13 @@ const MainMenu = ({ children: _, ...otherProps }) => {
         </li>
         {session ? (
           <>
-            <li>
-              <Link href="/posts/create" styless>
-                Create product
-              </Link>
-            </li>
+            {session.user.role === "admin" && (
+              <li>
+                <Link href="/admin" styless>
+                  Panel Admin
+                </Link>
+              </li>
+            )}
             <li>
               <button onClick={logOut}>Logout</button>
             </li>

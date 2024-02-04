@@ -1,3 +1,5 @@
+import auth from "@/api/middlewares/auth"
+import isAdmin from "@/api/middlewares/isAdmin"
 import validate from "@/api/middlewares/validate"
 import mw from "@/api/mw"
 import hashPassword from "@/db/hashPassword"
@@ -49,6 +51,8 @@ const handle = mw({
   ],
 
   GET: [
+    auth,
+    isAdmin,
     async ({ send, models: { UserModel } }) => {
       const users = await UserModel.query().select(
         "id",

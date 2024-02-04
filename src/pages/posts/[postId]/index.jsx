@@ -9,6 +9,7 @@ import CommentsList from "@/web/components/CommentsList"
 const PostPage = () => {
   const [comments, setComments] = useState(false)
   const { session } = useSession()
+  const router = useRouter()
   const {
     query: { postId },
   } = useRouter()
@@ -30,6 +31,11 @@ const PostPage = () => {
 
   return (
     <article>
+      {post.userId === session?.user.id && (
+        <button onClick={() => router.push(`/posts/${post.id}/update`)}>
+          Edit
+        </button>
+      )}
       <h1 className="text-2xl">
         {post.title} (#{post.id})
       </h1>

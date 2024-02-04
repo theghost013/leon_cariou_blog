@@ -6,9 +6,13 @@ import {
   emailValidator,
   roleValidator,
 } from "@/utils/validators"
+import auth from "@/api/middlewares/auth"
+import isAdmin from "@/api/middlewares/isAdmin"
 
 const handle = mw({
   GET: [
+    auth,
+    isAdmin,
     validate({
       query: {
         userId: idValidator.required(),
