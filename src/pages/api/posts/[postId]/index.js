@@ -26,10 +26,9 @@ const handle = mw({
         .withGraphFetched("comments.user")
         .throwIfNotFound()
 
-      // eslint-disable-next-line no-console
-      console.log("post", post)
-      // eslint-disable-next-line no-console
-      console.log(Array.isArray(post))
+      await post.$query().patch({
+        views: post.views + 1,
+      })
 
       send(post)
     },

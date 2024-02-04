@@ -13,14 +13,19 @@ import { object } from "yup"
 const useDataReadResource = () => {
   const {
     isLoading,
-    data: { data: { result: [profile] = [] } = {} } = {},
+    data: {
+      data: {
+        result: [profile] = [],
+        meta: { countPosts, countComments, countViews } = {},
+      } = {},
+    } = {},
     refetch,
   } = useQuery({
     queryKey: ["profile"],
     queryFn: () => readResource("users/profile"),
   })
 
-  return { isLoading, profile, refetch }
+  return { isLoading, profile, refetch, countPosts, countComments, countViews }
 }
 const validationSchema = object({
   username: nameValidator.required().label("User username"),
@@ -28,7 +33,8 @@ const validationSchema = object({
 const Profilepage = () => {
   const [editing, setEditing] = useState(false)
   const { session } = useSession()
-  const { isLoading, profile, refetch } = useDataReadResource()
+  const { isLoading, profile, refetch, countComments, countPosts, countViews } =
+    useDataReadResource()
   const { mutateAsync: updateProfile } = useMutation({
     mutationFn: (profileUpdate) =>
       updateResource(`users/profile`, profileUpdate),
@@ -71,13 +77,19 @@ const Profilepage = () => {
             </Form>
           </Formik>
         )}
-        <Button onClick={() => setEditing(!editing)}>Edit</Button>
+        <Button onClick={() => setEditing(!editing)}>
+          {editing ? "x" : "Edit"}
+        </Button>
       </div>
 
       <p>{profile.email}</p>
       <p>{profile.role}</p>
-      <p>{profile.created_at}</p>
-      <p>{profile.updated_at}</p>
+      <p>Created at {profile.created_at}</p>
+      <div className="flex felx-row gap-4">
+        <p>post count : {countPosts}</p>
+        <p>comment count : {countComments}</p>
+        <p>view count : {countViews}</p>
+      </div>
     </article>
   )
 }

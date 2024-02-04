@@ -14,7 +14,7 @@ const validationSchema = object({
 const initialValues = {
   body: "",
 }
-const CreateComment = ({ postId }) => {
+const CreateComment = ({ refetch, postId }) => {
   const [submittingMessage, setSubmittingMessage] = useState("")
   const { mutateAsync: saveComment } = useMutation({
     mutationFn: (comment) => createResource(`posts/${postId}/comment`, comment),
@@ -29,9 +29,9 @@ const CreateComment = ({ postId }) => {
         return
       }
 
-      setSubmittingMessage("comment created successfully")
+      refetch()
     },
-    [saveComment],
+    [refetch, saveComment],
   )
 
   return (

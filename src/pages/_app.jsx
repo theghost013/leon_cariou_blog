@@ -9,17 +9,17 @@ const App = ({ Component: Page, pageProps }) => (
   <div>
     <SessionContextProvider>
       <QueryClientProvider client={queryClient}>
-        <header className="border-b-2">
+        <header className="border-b-2 text-sky-700">
           <div className="max-w-3xl mx-auto flex items-center p-4">
             <h1 className="text-2xl">
               <Link href="/" styless>
-                BEST WEBSITE E.V.E.R
+                Balou Blog
               </Link>
             </h1>
             <MainMenu className="ms-auto" />
           </div>
         </header>
-        <div className="max-w-3xl mx-auto">
+        <div className="max-w-3xl mx-auto text-sky-700">
           <Page {...pageProps} />
         </div>
       </QueryClientProvider>

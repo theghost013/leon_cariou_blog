@@ -12,9 +12,16 @@ const handle = mw({
       },
     }),
     async ({ send, models: { UserModel }, data: { userId } }) => {
-      const user = await UserModel.query().findById(userId).throwIfNotFound()
+      const user = await UserModel.query()
+        .findById(userId)
+        .withGraphFetched("posts")
+        .withGraphFetched("comments")
+        .throwIfNotFound()
+      const countPosts = user.posts.length
+      const countComments = user.comments.length
+      const countViews = user.posts.reduce((acc, post) => acc + post.views, 0)
 
-      send(user)
+      send(user, { countPosts, countComments, countViews })
     },
   ],
   PATCH: [

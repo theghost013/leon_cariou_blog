@@ -1,9 +1,9 @@
 import NextLink from "next/link"
 
 const Link = (props) => {
-  const { styless, ...otherProps } = props
+  const { ...otherProps } = props
 
-  return <NextLink className={styless ? "" : "underline"} {...otherProps} />
+  return <NextLink {...otherProps} />
 }
 
 export default Link

@@ -21,7 +21,11 @@ const UsersList = ({ refetch, id, username, email }) => {
         <h1 className="text-2xl">{username}</h1>
         <p>{email}</p>
       </Link>
-      <Button className="rounded" onClick={() => handelDelete()}>
+      <Button
+        variant="delete"
+        className="rounded"
+        onClick={() => handelDelete()}
+      >
         delete
       </Button>
     </article>

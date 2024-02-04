@@ -13,13 +13,16 @@ const PostPage = () => {
   const {
     query: { postId },
   } = useRouter()
-  const { isLoading, data: { data: { result: [post] = [] } = {} } = {} } =
-    useQuery({
-      queryKey: ["post"],
-      queryFn: () => readResource(`posts/${postId}`),
-      enabled: Boolean(postId),
-      initialData: { data: {} },
-    })
+  const {
+    isLoading,
+    refetch,
+    data: { data: { result: [post] = [] } = {} } = {},
+  } = useQuery({
+    queryKey: ["post"],
+    queryFn: () => readResource(`posts/${postId}`),
+    enabled: Boolean(postId),
+    initialData: { data: {} },
+  })
 
   if (isLoading) {
     return "Loading..."
@@ -40,10 +43,11 @@ const PostPage = () => {
         {post.title} (#{post.id})
       </h1>
       <p>{post.body}</p>
+      <p>{post.views.toString()}</p>
       {session && (
         <button onClick={() => setComments(!comments)}>Comment</button>
       )}
-      {comments && <CreateComment postId={postId} />}
+      {comments && <CreateComment postId={postId} refetch={refetch} />}
       {post.comments.map(({ id, body, user }) => (
         <li key={id}>
           <CommentsList body={body} user={user} />

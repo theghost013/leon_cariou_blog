@@ -1,12 +1,13 @@
 import { pageValidator } from "@/utils/validators"
 import PostHeadline from "@/web/components/PostHeadline"
-import ButtonLink from "@/web/components/ui/ButtonLink"
 import Pagination from "@/web/components/ui/Pagination"
 import config from "@/web/config"
 import { readResource } from "@/web/services/apiClient"
 import { useQuery } from "@tanstack/react-query"
 import { useSession } from "@/web/components/SessionContext"
 import { useEffect, useState } from "react"
+import Button from "@/web/components/ui/Button"
+import Link from "@/web/components/ui/Link"
 
 export const getServerSideProps = ({ query: { page } }) => ({
   props: {
@@ -42,9 +43,9 @@ const IndexPage = (props) => {
     <div className="py-4 flex flex-col gap-16">
       <ul className="flex flex-col gap-8">
         {canCreate && (
-          <ButtonLink className="text-center" href="/posts/create">
+          <Button as={Link} className="text-center" href="/posts/create">
             Create post
-          </ButtonLink>
+          </Button>
         )}
         {posts.map(({ id, title, body }) => (
           <li key={id}>
